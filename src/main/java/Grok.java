@@ -57,19 +57,23 @@ public class Grok
      * Sets the power level of this Grok.
      * @param powerLevel the power value to set for this Grok.
      */
-    public void setPowerLevel(int powerLevel)
+    public void setPowerLevel(int powerLevel){
+        if (!isAlive)
+
     {
-        if (powerLevel > MAX_POWER_LEVEL) {
-            this.powerLevel = MAX_POWER_LEVEL;
-        } else if (powerLevel <= 0) {
-            this.powerLevel = 0;
-            isAlive = false;
-        } else {
-            this.powerLevel = powerLevel;
-        }
+        return;
     }
 
-    /*
+    this.powerLevel = Math.min(Math.max(powerLevel, 0), MAX_POWER_LEVEL);
+
+    // If power level drops below zero, Grok is dead
+    if (this.powerLevel <= 0) {
+        this.powerLevel = 0;
+        isAlive = false;
+    }
+}
+
+/*
      * Set the power level of this Grok to the power level of
      * the pill.
      * @param pill The PowerPill that the this Grok.  The power
