@@ -3,7 +3,7 @@
  * a PowerPill to replenish their energy.  This makes them difficult
  * to kill.
  *
- * @author (You Again)
+ * @author (Leen)
  * @version (0.1)
  */
 public class Grok
@@ -20,6 +20,7 @@ public class Grok
      */
     public Grok()
     {
+        isAlive = true;
         setPowerLevel(DEFAULT_POWER_LEVEL);
     }
 
@@ -30,6 +31,7 @@ public class Grok
      */
     public Grok(int powerLevel)
     {
+        isAlive = true;
         setPowerLevel(powerLevel);
     }
 
@@ -46,7 +48,7 @@ public class Grok
 
     public boolean isDead()
     {
-        // TODO: replace this line with your code here
+        return !isAlive;
     }
 
     // mutator methods
@@ -57,7 +59,14 @@ public class Grok
      */
     public void setPowerLevel(int powerLevel)
     {
-        this.powerLevel = powerLevel;
+        if (powerLevel > MAX_POWER_LEVEL) {
+            this.powerLevel = MAX_POWER_LEVEL;
+        } else if (powerLevel <= 0) {
+            this.powerLevel = 0;
+            isAlive = false;
+        } else {
+            this.powerLevel = powerLevel;
+        }
     }
 
     /*
@@ -68,7 +77,11 @@ public class Grok
      */
     public void takePowerPill(PowerPill pill)
     {
+        if (!isAlive){
+            return;
+        }
         setPowerLevel(powerLevel + pill.getPower());
+
     }
 
     /*
@@ -77,7 +90,19 @@ public class Grok
      */
     public void tookHit()
     {
+        if (!isAlive){
+            return;
+        }
         setPowerLevel(powerLevel - 5);
+
+    }
+    private void maxMin() {
+        if (powerLevel > MAX_POWER_LEVEL) {
+            powerLevel = MAX_POWER_LEVEL;
+        } else if (powerLevel <= 0) {
+            powerLevel = 0;
+            isAlive = false;
+        }
     }
 
     //================== Do Not Touch Code Below this line =============================
